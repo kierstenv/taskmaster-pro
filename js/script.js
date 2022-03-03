@@ -82,7 +82,44 @@ $("#task-form-modal .btn-primary").click(function() {
   }
 });
 
-// remove all tasks
+$(".list-group").on("click", "p", function() {
+  const text = $(this)
+  .text()
+  .trim();
+
+  const textInput = $("<textarea>")
+  .addClass("form-control")
+  .val(text);
+
+  $(this).replaceWith(textInput);
+
+  textInput.trigger("select");
+});
+
+$(".list-group").on("blur", "textarea", function() {
+  const text = $(this)
+  .val()
+  .trim();
+  
+  const status = $(this)
+  .closest(".list-group")
+  .attr("id")
+  .replace("list-", "");
+
+  const index = $(this)
+  .closest(".list-group-item")
+  .index();
+
+  tasks[status][index].text = text;
+  saveTasks();
+
+  const taskP = $("<p>")
+  .addClass("m-1")
+  .text(text);
+
+  $(this).replaceWith(taskP);
+});
+
 $("#remove-tasks").on("click", function() {
   for (var key in tasks) {
     tasks[key].length = 0;
