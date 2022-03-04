@@ -47,7 +47,6 @@ var saveTasks = function() {
 
 
 
-
 // modal was triggered
 $("#task-form-modal").on("show.bs.modal", function() {
   // clear values
@@ -161,6 +160,52 @@ $(".list-group").on("blur", "textarea", function() {
   $(this).replaceWith(taskP);
 });
 
+// drag tasks 2 edit
+$(".card .list-group").sortable({
+  connectWith: $(".card .list-group"),
+  scroll: false,
+  tolerance: "pointer",
+  helper: "clone",
+
+  update: function(event) {
+    const tempArr = [];
+    
+    $(this).children().each(function() {
+      const text = $(this)
+      .find("p")
+      .text()
+      .trim();
+
+      const date = $(this)
+      .find("span")
+      .text()
+      .trim();
+
+      tempArr.push({
+        text: text,
+        date: date
+      });
+    });
+    
+    const arrName = $(this)
+    .attr("id")
+    .replace("list-", "");
+
+    tasks[arrName] = tempArr;
+    saveTasks();
+  }
+});
+
+//drop 2 remove tasks
+$("#trash").droppable({
+  accept: ".card .list-group-item",
+  tolerance: "touch",
+  drop: function(event, ui) {
+    ui.draggable.remove();
+  },
+});
+
+// remove tasks
 $("#remove-tasks").on("click", function() {
   for (var key in tasks) {
     tasks[key].length = 0;
