@@ -3,7 +3,7 @@ var tasks = {};
 var createTask = function(taskText, taskDate, taskList) {
   // create elements that make up a task item
   var taskLi = $("<li>").addClass("list-group-item");
-  var taskSpan = $("<span>").addClass("badge badge-save badge-pill").text(taskDate);
+  var taskSpan = $("<span>").addClass("badge badge-primary badge-pill").text(taskDate);
   var taskP = $("<p>").addClass("m-1").text(taskText);
 
   // append span and p element to parent li
@@ -122,7 +122,7 @@ $(".list-group").on("change", "input[type='text']", function() {
   tasks[status][index].date = date;
   saveTasks();
 
-  const taskSpan = $("<span>").addClass("badge badge-save badge-pill").text(date);
+  const taskSpan = $("<span>").addClass("badge badge-primary badge-pill").text(date);
   $(this).replaceWith(taskSpan);
 
   auditTask($(taskSpan).closest(".list-group-item"));
