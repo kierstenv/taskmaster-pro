@@ -3,7 +3,7 @@ var tasks = {};
 var createTask = function(taskText, taskDate, taskList) {
   // create elements that make up a task item
   var taskLi = $("<li>").addClass("list-group-item");
-  var taskSpan = $("<span>").addClass("badge badge-primary badge-pill").text(taskDate);
+  var taskSpan = $("<span>").addClass("badge badge-save badge-pill").text(taskDate);
   var taskP = $("<p>").addClass("m-1").text(taskText);
 
   // append span and p element to parent li
@@ -74,7 +74,7 @@ $("#modalDueDate").datepicker({
 });
 
 // save button in modal was clicked
-$("#task-form-modal .btn-primary").click(function() {
+$("#task-form-modal .btn-save").click(function() {
   // get form values
   var taskText = $("#modalTaskDescription").val();
   var taskDate = $("#modalDueDate").val();
@@ -122,7 +122,7 @@ $(".list-group").on("change", "input[type='text']", function() {
   tasks[status][index].date = date;
   saveTasks();
 
-  const taskSpan = $("<span>").addClass("badge badge-primary badge-pill").text(date);
+  const taskSpan = $("<span>").addClass("badge badge-save badge-pill").text(date);
   $(this).replaceWith(taskSpan);
 
   auditTask($(taskSpan).closest(".list-group-item"));
@@ -159,6 +159,20 @@ $(".card .list-group").sortable({
   tolerance: "pointer",
   helper: "clone",
 
+  activate: function(event) {
+    $(this).addClass("dropover"),
+    $(".bottom-trash").addClass("bottom-trash-drag")
+  },
+  deactivate: function(event) {
+    $(this).removeClass("dropover")
+    $(".bottom-trash").removeClass("bottom-trash-drag")
+  },
+  over: function(event) {
+    $(event.target).addClass("dropover-active")
+  },
+  out: function(event) {
+    $(event.target).removeClass("dropover-active")
+  },
   update: function(event) {
     const tempArr = [];
     
@@ -186,7 +200,15 @@ $(".card .list-group").sortable({
 $("#trash").droppable({
   accept: ".card .list-group-item",
   tolerance: "touch",
+
+  over: function(event) {
+    $(event.target).addClass("bottom-trash-active")
+  },
+  out: function(event) {
+    $(event.target).removeClass("bottom-trash-active")
+  },
   drop: function(event, ui) {
+    $(event.target).removeClass("bottom-trash-active")
     ui.draggable.remove();
   },
 });

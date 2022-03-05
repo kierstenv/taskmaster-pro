@@ -14,17 +14,16 @@
 </head>
 
 <body>
-
   <div class="row min-vh-100 no-gutters">
     <header class="col-12 col-lg-3 bg-dark text-light sticky-top d-flex flex-column p-4 p-lg-3">
       <h1 class="text-center">
         <span class="oi oi-task d-inline d-lg-none"></span>
         Taskmaster Pro Edition
       </h1>
-      <button id="create-task" class="btn btn-block btn-success" data-toggle="modal" data-target="#task-form-modal">
+      <button id="create-task" class="btn btn-block btn-add" data-toggle="modal" data-target="#task-form-modal">
         <span class="oi oi-plus mr-2"></span>Add Task
       </button>
-      <button id="remove-tasks" class="btn btn-block btn-danger">
+      <button id="remove-tasks" class="btn btn-block btn-delete">
         <span class="oi oi-trash mr-1"></span>Delete All Tasks
       </button>
       <span class="oi oi-task display-1 text-center mb-2 d-none d-lg-block mt-auto"></span>
@@ -67,8 +66,8 @@
           </div>
         </div>
       </div>
-      <div id="trash" class="mt-auto">
-        <div class="w-100 bg-danger p-3 text-center text-light display-4">
+      <div class="mt-auto overflow-hidden" id="trash">
+        <div class="w-100 p-3 text-center bottom-trash">
           <span class="oi oi-trash mr-2"></span>Drop Here to Remove.
         </div>
       </div>
@@ -99,8 +98,8 @@
           </form>
         </div>
         <div class="modal-footer">
-          <button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
-          <button type="button" class="btn btn-primary">Save Task</button>
+          <button type="button" class="btn btn-close" data-dismiss="modal">Close</button>
+          <button type="button" class="btn btn-save">Save Task</button>
         </div>
       </div>
     </div>
